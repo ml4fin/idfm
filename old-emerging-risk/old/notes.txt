@@ -1,0 +1,8 @@
+- controllare global industry classification standard
+- calcolare realized variance dai dati OCHL
+- la capitalizzazione serve per creare un indice pesato per la capitalizzazione
+
+calcolo extrarendimenti in python 
+(ref engle and giglio vedi appendice - fama)
+
+kelly dataset su un numero molto elevato di fattori di rischio

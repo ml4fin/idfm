@@ -1,0 +1,99 @@
+\documentclass[12pt]{report}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, graphicx, hyperref, booktabs}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{setspace}
+\usepackage{caption}
+\usepackage{natbib}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{listings}
+
+% Line spacing
+\onehalfspacing
+
+% Title
+\title{Forecasting the Emergence of New Risks: \\
+A Text-Based Approach to Anticipating Firm-Level Exposure}
+\author{Author Name \\ MSc in Statistics}
+\date{\today}
+
+% Begin document
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This research explores the capacity of news data to forecast the emergence of new types of risks (e.g., AI-related, water scarcity), and validates such forecasts against firm-level disclosures (10-K filings). Leveraging zero-shot and weak supervision NLP models, the study aims to construct risk timelines, identify early signals of risk emergence, and assess the predictive power of media trends over corporate risk disclosures.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\chapter{Introduction}
+\section{Motivation}
+\section{Research Questions}
+\section{Contributions of the Thesis}
+
+\chapter{Literature Review}
+\section{Emerging Risk in Finance and ESG}
+\section{Textual Analysis of News and Disclosures}
+\section{Zero-shot and Weak Supervision in NLP}
+\section{Risk Forecasting and Disclosure Models}
+
+\chapter{Data Description}
+\section{News Corpus: Sources and Preprocessing}
+\section{10-K Filings: Risk Factor Extraction}
+\section{Risk Taxonomy and Label Definition}
+
+\chapter{Methodology}
+\section{Overview of NLP and AI Techniques}
+\subsection{Text Preprocessing and Tokenization}
+Standard preprocessing techniques including sentence segmentation, tokenization, lowercasing, and stopword removal will be applied using libraries such as spaCy and NLTK. Pre-trained tokenizer models from HuggingFace will also be used for transformer-based architectures.
+
+\subsection{Zero-shot Classification with NLI Models}
+To classify text without labeled training data, we use models such as \texttt{facebook/bart-large-mnli} and \texttt{nli-roberta-base}. These treat classification as a natural language inference task, estimating whether a paragraph entails a risk label formulated as a sentence hypothesis.
+
+\subsection{Weak Supervision using Snorkel}
+Snorkel will be employed to define labeling functions (LFs) using dictionaries, heuristic patterns, and news-event alignment to weakly label data. These LFs generate noisy labels, which are aggregated probabilistically to create pseudo-labels for training supervised models.
+
+\subsection{Supervised Multi-label Classification using BERT}
+BERT-based models (e.g., FinBERT, Legal-BERT) will be fine-tuned for multi-label classification of risk types in 10-K sections. A sigmoid activation with binary cross-entropy loss will be used to allow each document to be assigned multiple risk labels.
+
+\subsection{Embedding and Similarity Measures}
+Transformer-based embeddings (CLS tokens) will be extracted and used for semantic similarity analysis, clustering, and trend mapping. Cosine similarity between paragraphs will help identify novel formulations of risks.
+
+\subsection{Time Series Construction and Analysis}
+Temporal trends of risk mentions in news will be aggregated into normalized indices (monthly or weekly). Statistical techniques including changepoint detection and Granger causality will be used to model predictive relationships.
+
+\subsection{Prediction Modeling}
+Predictive models will be trained to forecast future firm-level risk disclosures. Algorithms include logistic regression, random forest, and gradient boosting, using both textual features and external covariates (e.g., ESG scores, industry sector).
+
+\chapter{Empirical Results}
+\section{Trends in Risk Emergence in News Data}
+\section{Firm-Level Risk Adoption Patterns}
+\section{Lead-Lag Relationship Analysis}
+\section{Prediction Accuracy and Evaluation}
+
+\chapter{Discussion}
+\section{Interpretation of Results}
+\section{Implications for Risk Management and ESG}
+\section{Limitations and Future Work}
+
+\chapter{Conclusion}
+\section{Summary of Findings}
+\section{Policy and Strategic Implications}
+
+\appendix
+\chapter{Model Parameters and Code Snippets}
+\chapter{Extended Tables and Figures}
+
+\bibliographystyle{apalike}
+\bibliography{references}
+
+\end{document}

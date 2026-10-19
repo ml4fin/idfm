@@ -1,0 +1,6 @@
+enabled,file_path,max_rows,description
+1,C:/corpus/news-2/FTXX_2014_2023.csv,,Financial Times debug
+1,C:/corpus/news-2/WSJX_2014_2023.csv,,Wall Street Journal debug
+1,C:/corpus/news-2/NYTX_2014_2023.csv,,New York Times debug
+1,C:/corpus/news-2/LATX_2014_2023.csv,,Los Angeles Times temporarily disabled
+1,C:/corpus/news-2/USAT_2014_2023.csv,,USA Today debug

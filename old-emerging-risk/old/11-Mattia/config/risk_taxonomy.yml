@@ -1,0 +1,420 @@
+risk_categories:
+
+  cyber_incident_breach:
+    description: >
+      Actual cybersecurity incidents involving unauthorized access, compromise,
+      exfiltration, theft, exposure, or destruction of digital information,
+      systems, credentials, or corporate assets. This category covers realized
+      cyber intrusions and breach events rather than generic cyber preparedness.
+    inclusion_criteria:
+      - realized or alleged unauthorized access to systems or data
+      - data breach, exposure, theft, compromise, or exfiltration
+      - compromise of credentials, accounts, endpoints, or infrastructure
+      - notifications of cyber incidents affecting confidentiality or integrity
+    exclusion_criteria:
+      - generic statements about cyber risk without a concrete event
+      - pure privacy-law compliance discussions without a security incident
+      - service outages not clearly linked to a cyber cause
+    seed_terms:
+      - cybersecurity incident
+      - cyber incident
+      - data breach
+      - breach
+      - unauthorized access
+      - intrusion
+      - compromise
+      - account compromise
+      - credential theft
+      - exfiltration
+      - stolen data
+      - exposed data
+      - network compromise
+      - system compromise
+      - malicious access
+      - threat actor
+      - security incident
+      - information systems were accessed
+      - confidential information
+      - personally identifiable information
+      - pii exposure
+
+  cyber_ransomware_extortion:
+    description: >
+      Cyber events involving ransomware, extortion, encryption of systems,
+      threats to publish stolen data, or demands for payment to restore access
+      or prevent disclosure. This is a specialized cyber-event category due to
+      its distinct mechanism and disclosure profile.
+    inclusion_criteria:
+      - ransomware attacks or ransomware-related business disruption
+      - cyber extortion or ransom demand
+      - encryption or locking of enterprise systems by an attacker
+      - double-extortion or leak-site threats
+    exclusion_criteria:
+      - ordinary malware references without extortion or encryption
+      - generic references to cyber preparedness
+    seed_terms:
+      - ransomware
+      - ransom
+      - cyber extortion
+      - extortion demand
+      - encrypted systems
+      - encryption attack
+      - decryptor
+      - double extortion
+      - lockbit
+      - payment demand
+      - restore systems
+      - malicious encryption
+      - leak site
+      - extortion actor
+      - data release threat
+
+  cyber_system_disruption:
+    description: >
+      Cyber-related disruptions to the availability or reliability of systems,
+      digital operations, enterprise platforms, cloud services, or networks.
+      This category captures the operational-availability dimension of cyber risk.
+    inclusion_criteria:
+      - cyber-induced outages or downtime
+      - interruption of digital operations due to malicious activity
+      - degradation of system availability following attack
+      - denial-of-service or service interruption tied to cyber events
+    exclusion_criteria:
+      - operational outages with no cyber cause
+      - production disruptions caused by supply chain or labor issues
+    seed_terms:
+      - outage
+      - service interruption
+      - system outage
+      - downtime
+      - denial of service
+      - distributed denial of service
+      - ddos
+      - disruption of operations
+      - unavailable systems
+      - network outage
+      - service degradation
+      - platform disruption
+      - incident response shutdown
+      - containment shutdown
+
+  cyber_third_party_vendor:
+    description: >
+      Cybersecurity exposure transmitted through vendors, suppliers, service
+      providers, software dependencies, managed service providers, or other
+      third parties in the digital supply chain.
+    inclusion_criteria:
+      - third-party breach affecting the firm
+      - compromise of service provider, software supplier, cloud provider
+      - vendor dependency in cyber defense or incident exposure
+      - downstream exposure from external platforms or managed services
+    exclusion_criteria:
+      - ordinary non-cyber supplier issues
+      - internal cyber incidents with no third-party dimension
+    seed_terms:
+      - third party breach
+      - vendor breach
+      - supplier breach
+      - service provider incident
+      - msp compromise
+      - cloud provider incident
+      - software vulnerability
+      - software supply chain
+      - dependency risk
+      - external provider compromise
+      - vendor security incident
+      - third party security incident
+      - downstream compromise
+
+  cyber_data_privacy:
+    description: >
+      Risks centered on unlawful collection, processing, transfer, retention,
+      misuse, or disclosure of personal or sensitive data, especially where
+      privacy obligations, customer harm, or cross-border data issues are central.
+      This category is privacy-centered rather than attack-centered.
+    inclusion_criteria:
+      - privacy violations, improper use or disclosure of personal data
+      - consumer or employee data handling failures
+      - violations involving consent, retention, transfer, or lawful basis
+      - privacy harms whether or not a cyber intrusion occurred
+    exclusion_criteria:
+      - pure cyber intrusion language where privacy is incidental
+      - general compliance issues unrelated to data/privacy
+    seed_terms:
+      - privacy violation
+      - privacy breach
+      - consumer data
+      - personal data
+      - sensitive data
+      - data misuse
+      - unlawful processing
+      - consent failure
+      - data retention
+      - cross-border data transfer
+      - gdpr
+      - data privacy
+      - privacy law
+      - privacy rights
+      - privacy complaint
+
+  cyber_governance_control:
+    description: >
+      Weaknesses in cyber governance, control environment, security architecture,
+      monitoring, incident response preparedness, identity management, resilience,
+      or board/management oversight of cyber risk.
+    inclusion_criteria:
+      - references to deficient cyber controls or governance failures
+      - lack of monitoring, access controls, segmentation, authentication
+      - resilience and preparedness weaknesses
+      - board oversight and cyber risk management deficiencies
+    exclusion_criteria:
+      - realized incidents with clear breach mechanics
+      - pure regulatory enforcement unless centered on cyber controls
+    seed_terms:
+      - cybersecurity controls
+      - security controls
+      - internal controls
+      - access control
+      - identity management
+      - multifactor authentication
+      - mfa
+      - vulnerability management
+      - patching
+      - incident response
+      - resilience
+      - cyber resilience
+      - governance failure
+      - board oversight
+      - monitoring failure
+      - detection failure
+      - remediation
+      - zero trust
+      - security posture
+
+  ai_model_risk:
+    description: >
+      Technical and decision-risk arising from artificial intelligence or model-based
+      systems, including hallucination, bias, instability, misclassification, poor
+      robustness, explainability limitations, model drift, and harmful outputs.
+    inclusion_criteria:
+      - model failure, hallucination, unstable or unreliable outputs
+      - biased, discriminatory, or unexplainable AI decisions
+      - drift, robustness failure, or poor calibration
+      - misuse of model outputs in operations, products, or reporting
+    exclusion_criteria:
+      - general digital transformation language
+      - regulatory compliance language unless specifically about AI governance
+    seed_terms:
+      - artificial intelligence
+      - generative ai
+      - ai system
+      - foundation model
+      - model risk
+      - model failure
+      - hallucination
+      - bias
+      - explainability
+      - interpretability
+      - drift
+      - model drift
+      - unreliable output
+      - algorithmic failure
+      - misclassification
+      - unsafe output
+      - robustness failure
+      - training data issue
+
+  ai_governance_compliance:
+    description: >
+      Legal, regulatory, governance, audit, documentation, accountability, or
+      data-governance risks specifically related to the use or deployment of AI
+      systems.
+    inclusion_criteria:
+      - AI regulation, AI governance, accountability, documentation, auditability
+      - data lineage, model documentation, oversight, policy compliance for AI
+      - intellectual property or legal exposure tied to AI deployment
+    exclusion_criteria:
+      - technical model failure without governance angle
+      - generic compliance language unrelated to AI
+    seed_terms:
+      - ai governance
+      - ai regulation
+      - ai compliance
+      - responsible ai
+      - model documentation
+      - auditability
+      - accountability
+      - ai policy
+      - ai oversight
+      - ai act
+      - copyright risk
+      - intellectual property
+      - training data rights
+      - model governance
+      - data governance
+
+  regulation_enforcement:
+    description: >
+      External legal or regulatory enforcement exposure, including investigations,
+      subpoenas, inquiries, enforcement actions, penalties, sanctions, and formal
+      proceedings initiated by regulators or authorities.
+    inclusion_criteria:
+      - sec, doj, cftc, fca, eu or other regulator inquiry or action
+      - subpoenas, investigations, fines, settlements, sanctions
+      - formal external enforcement processes
+    exclusion_criteria:
+      - internal control weakness without an external authority action
+      - ordinary litigation not primarily regulatory
+    seed_terms:
+      - investigation
+      - regulatory investigation
+      - sec inquiry
+      - subpoena
+      - enforcement action
+      - regulatory action
+      - fine
+      - penalty
+      - sanction
+      - settlement
+      - consent order
+      - deficiency notice
+      - supervisory action
+      - governmental inquiry
+
+  disclosure_reporting_controls:
+    description: >
+      Risks related to financial reporting, disclosure controls, internal control
+      over reporting, restatements, material weakness, timeliness, completeness,
+      or accuracy of corporate disclosure.
+    inclusion_criteria:
+      - disclosure controls and procedures
+      - internal control weaknesses
+      - reporting deficiencies, restatements, delayed filings
+      - misstatement or incomplete disclosure
+    exclusion_criteria:
+      - external enforcement unless centered on reporting deficiencies
+      - generic legal risk without disclosure or controls dimension
+    seed_terms:
+      - disclosure control
+      - disclosure controls and procedures
+      - internal control over financial reporting
+      - icfr
+      - material weakness
+      - significant deficiency
+      - restatement
+      - reporting deficiency
+      - misstatement
+      - delayed filing
+      - non-reliance
+      - inaccurate disclosure
+      - financial reporting control
+
+  supply_chain_disruption:
+    description: >
+      Risks arising from interruption, fragility, delay, concentration, or shortage
+      in the upstream or downstream supply chain, including critical input dependence
+      and logistics breakdown.
+    inclusion_criteria:
+      - supplier disruption, shipping delays, logistics bottlenecks
+      - critical component shortages and concentration dependence
+      - transportation and distribution interruption
+    exclusion_criteria:
+      - cyber third-party incidents
+      - general operational failures unrelated to supply chain dependency
+    seed_terms:
+      - supply chain
+      - supplier
+      - sole source supplier
+      - logistics
+      - bottleneck
+      - shortage
+      - shipping delay
+      - transportation disruption
+      - procurement issue
+      - component shortage
+      - inventory shortfall
+      - vendor concentration
+      - fulfillment disruption
+
+  operational_disruption:
+    description: >
+      Non-cyber business interruption affecting production, delivery, execution,
+      service continuity, facilities, workforce operations, or core processes.
+    inclusion_criteria:
+      - plant shutdown, facility outage, process interruption
+      - execution failure, workforce disruption, operational breakdown
+      - inability to maintain ordinary business continuity
+    exclusion_criteria:
+      - clearly cyber-driven service outages
+      - pure supply chain dependency issues
+    seed_terms:
+      - operational disruption
+      - business interruption
+      - shutdown
+      - plant outage
+      - facility closure
+      - production interruption
+      - service disruption
+      - continuity failure
+      - labor disruption
+      - workforce disruption
+      - operational breakdown
+      - process failure
+
+  liquidity_funding_stress:
+    description: >
+      Risks involving near-term liquidity pressure, funding strain, refinancing
+      difficulty, covenant stress, rollover risk, or deterioration in access to
+      funding sources and capital markets.
+    inclusion_criteria:
+      - cash shortfall, funding gap, refinancing or rollover pressure
+      - covenant breaches or waiver dependence
+      - stressed access to debt or capital markets
+    exclusion_criteria:
+      - broader solvency/business viability language without funding mechanics
+      - market price declines with no financing dimension
+    seed_terms:
+      - liquidity
+      - liquidity stress
+      - funding pressure
+      - refinancing
+      - rollover risk
+      - covenant breach
+      - covenant pressure
+      - debt servicing
+      - credit facility
+      - borrowing capacity
+      - access to capital
+      - financing constraint
+      - cash shortfall
+      - working capital pressure
+
+  market_valuation_financial:
+    description: >
+      Risks tied to market value deterioration, asset repricing, fair-value losses,
+      valuation uncertainty, impairment, volatility in financing conditions, or
+      adverse financial-market movements affecting the firm.
+    inclusion_criteria:
+      - valuation adjustment, fair value decline, impairment, mark-to-market losses
+      - financial-market volatility affecting assets, liabilities, or financing
+    exclusion_criteria:
+      - direct liquidity/funding mechanics
+      - purely operational or legal risk
+    seed_terms:
+      - valuation risk
+      - fair value
+      - impairment
+      - mark to market
+      - market volatility
+      - spread widening
+      - repricing
+      - asset write-down
+      - valuation uncertainty
+      - credit spread
+      - financing conditions
+
+lm_categories_to_track:
+  - Negative
+  - Uncertainty
+  - Litigious
+  - Constraining

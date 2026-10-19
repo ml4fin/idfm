@@ -1,0 +1,9 @@
+pandas
+numpy
+scikit-learn
+pyyaml
+requests
+beautifulsoup4
+lxml
+edgartools
+pyarrow

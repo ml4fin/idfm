@@ -1,0 +1,166 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\setstretch{1.15}
+
+\title{\textbf{Emergence and Prediction of New Financial Risk Categories}\\
+\vspace{0.3cm}
+\large A Text-Based Analysis of News and Regulatory Disclosures}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Executive Summary}
+
+This project should investigate how new financial risk categories emerge and become material for firms and markets. Using a decade of major U.S. financial news combined with firm-level regulatory disclosures from 10-K and 8-K filings, the study should reconstruct historical episodes of risk emergence and identifies measurable early indicators. Building on these retrospective findings, the project should develop a forward-looking framework designed to estimate the probability that a candidate theme (such as AI-related risk) will evolve into an institutionalized and widely disclosed financial risk category.
+
+The project should contribute to the literature by providing a reproducible and data-driven definition of risk emergence, integrating textual signals from multiple information channels, and translating qualitative narratives into quantitative indicators suitable for econometric analysis and early-warning systems.
+
+\section{Research Questions and Objectives}
+
+The project should be structured around two primary research questions.
+
+\textbf{RQ1 (Retrospective).} How does a new financial risk category emerge? Which observable indicators in the information environment precede its broad recognition and institutionalization in corporate disclosures?
+
+\textbf{RQ2 (Forward-looking).} Given information available up to the present, how can the emergence of a new risk category be anticipated, and how can the probability of such emergence be estimated for candidate themes such as AI-related risk?
+
+The main objectives should be:
+\begin{itemize}
+\item to define an operational and reproducible notion of financial risk emergence;
+\item to construct quantitative indicators capturing attention, novelty, diffusion, and structural integration;
+\item to estimate typical lead--lag relationships between news, 8-K disclosures, and 10-K risk-factor adoption;
+\item to develop and validate an early-warning framework for emerging risks;
+\item to produce research outputs suitable for academic publication and practical risk monitoring.
+\end{itemize}
+
+\section{Data Sources and Corpus Construction}
+
+The empirical analysis should combine three complementary information channels:
+
+\begin{itemize}
+\item \textbf{Financial news:} full-text articles from five major U.S. newspapers with a financial focus, including publication dates and metadata.
+\item \textbf{10-K filings:} Item 1A (Risk Factors) extracted on a firm-year basis.
+\item \textbf{8-K filings:} event-driven disclosures capturing material incidents and emerging concerns.
+\end{itemize}
+
+All documents should be time-stamped and organized into a unified corpus. Preprocessing includes boilerplate removal, deduplication, paragraph segmentation, and normalization of firm identifiers and named entities.
+
+\section{Defining Financial Risk Emergence}
+
+A central methodological requirement should be a definition of risk emergence that is measurable and replicable. A candidate risk should be said to \emph{emerge} at time $t^*$ when multiple indicators jointly transition from low background levels to a persistent high state, indicating diffusion and institutionalization rather than isolated mentions.
+
+Operational criteria include:
+\begin{itemize}
+\item a sustained increase in news attention;
+\item semantic consolidation of the underlying concept;
+\item a persistent rise in firm-level disclosure;
+\item structural integration with, and eventual differentiation from, existing risk categories.
+\end{itemize}
+
+\section{Indicators for Retrospective Analysis}
+
+\subsection{News-Based Indicators}
+
+News-based indicators should capture the informational environment in which new risks first appear:
+\begin{itemize}
+\item coverage intensity and burst dynamics;
+\item novelty and semantic drift of risk-related language;
+\item expansion of entity co-mention networks;
+\item diversification of contexts across industries and topics.
+\end{itemize}
+
+\subsection{Disclosure-Based Indicators}
+
+Indicators derived from 10-K and 8-K filings should capture institutional adoption:
+\begin{itemize}
+\item diffusion rate across firms;
+\item disclosure intensity within filings;
+\item co-occurrence patterns with other risk categories;
+\item lead--lag relationships between 8-K and 10-K disclosures.
+\end{itemize}
+
+\section{Methodological Framework}
+
+The empirical framework should proceed in four steps.
+
+\subsection{Candidate Theme Identification}
+
+Candidate themes should be identified in news data using time-aware topic discovery and burst detection. Themes displaying sustained growth and expanding contextual usage are retained as potential emerging risks.
+
+\subsection{Theme Tagging and Measurement}
+
+Identified themes should be mapped to news and disclosure texts using supervised or weakly supervised classification. Document-level scores are aggregated into time series capturing attention, diffusion, and co-occurrence dynamics.
+
+\subsection{Estimating Emergence Mechanisms}
+
+Two complementary strategies should be employed:
+\begin{itemize}
+\item \textbf{Event-history (hazard) models}, where the event of interest is the first-time disclosure of a risk by a firm;
+\item \textbf{Change-point detection}, applied to diffusion and intensity series to identify structural breaks.
+\end{itemize}
+
+\subsection{Validation}
+
+Validation should rely on out-of-sample prediction, robustness checks across alternative specifications, and qualitative alignment with documented historical events. Market-based validation may additionally assess reactions in returns or volatility.
+
+\section{Forward-Looking Early Warning Framework}
+
+The forward-looking component should estimate the probability that a candidate theme will transition into an institutionalized risk category within a given horizon (e.g., 3, 6, or 12 months). The framework uses only information available up to the forecast date and is evaluated in a rolling-window setting.
+
+A key application concerns AI-related risk, monitored through sub-themes such as model risk, regulation, data governance, security vulnerabilities, intellectual property, and workforce impact.
+
+\section{Expected Contributions}
+
+The project should deliver:
+\begin{itemize}
+\item a reproducible definition of financial risk emergence;
+\item a measurement toolkit for textual risk indicators;
+\item empirical evidence on lead--lag dynamics between news and disclosures;
+\item an early-warning model for emerging risk categories;
+\item a research-ready dataset for further econometric analysis.
+\end{itemize}
+
+\newpage
+\appendix
+
+\section{Appendix A: Glossary of Technical Terms}
+
+\textbf{Burst detection (Kleinberg algorithm).} A method to identify time intervals in which the frequency of events increases sharply relative to a baseline, signaling abnormal attention.
+
+\textbf{Semantic drift.} The evolution of a concept’s meaning over time, measured through changes in semantic representations.
+
+\textbf{Novelty.} A measure of how different current usage of a concept is relative to its historical baseline.
+
+\textbf{Disclosure diffusion.} The spread of a risk category across firms, typically measured as the fraction of firms disclosing the risk.
+
+\textbf{Co-occurrence.} The joint appearance of multiple risks within the same document or textual unit.
+
+\textbf{Change-point detection.} Statistical methods that identify structural changes in time series.
+
+\textbf{Event-history (hazard) modeling.} A framework for modeling the timing of events, such as first-time risk disclosure.
+
+\textbf{Rolling-window evaluation.} A forecasting evaluation procedure that uses only past information at each forecast date.
+
+\section{Appendix B: Identification of the Risk Emergence Time $t^*$}
+
+For each candidate risk, a disclosure diffusion curve should be constructed as:
+$$
+D_r(t) = \frac{\text{Number of firms disclosing risk } r \text{ at time } t}{\text{Total number of firms at time } t}.
+$$
+
+The emergence time $t^*$ should be defined as the point at which this series exhibits a statistically significant structural change. Prior to $t^*$, diffusion fluctuates around a low baseline, reflecting sporadic mentions. After $t^*$, diffusion increases persistently, indicating institutionalization.
+
+Change-point detection methods should be applied to estimate $t^*$ in a data-driven manner. The resulting estimate is subsequently assessed for plausibility by comparison with external historical timelines, such as major incidents, regulatory changes, or technological shifts. This validation step supports interpretation without imposing external information on the estimation procedure itself.
+
+Identifying $t^*$ should provide both an operational definition of risk emergence and a reference point for analyzing lead--lag relationships between news coverage, event-driven disclosures, and annual risk-factor reporting.
+
+\end{document}

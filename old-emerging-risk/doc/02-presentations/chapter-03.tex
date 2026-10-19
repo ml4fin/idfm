@@ -1,0 +1,1429 @@
+\documentclass[11pt]{beamer}
+\usetheme{CambridgeUS}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{pgfpages}
+\usepackage{framed}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{soul}
+\usepackage{empheq}
+
+% The replacement character � (often displayed as a black rhombus with a white
+% question mark) is a symbol found in the Unicode standard at code point U
+% +FFFD in the Specials table. It is used to indicate problems when a system 
+% is unable to render a stream of data to a correct symbol.[4] It is usually 
+% seen when the data is invalid and does not match any character. For this 
+% reason we map explicitly this character to a blanck space.
+\DeclareUnicodeCharacter{FFFD}{ }
+
+\newcommand*{\itemimg}[1]{%
+  \raisebox{-.3\baselineskip}{%
+    \includegraphics[
+      height=\baselineskip,
+      width=\baselineskip,
+      keepaspectratio,
+    ]{#1}%
+  }%
+}
+
+\newtcbox{\mymath}[1][]{%
+    nobeforeafter, math upper, tcbox raise base,
+    enhanced, colframe=blue!30!black,
+    colback=blue!10, boxrule=1pt,
+    #1}
+
+\newcommand{\hlym}[1]{%
+  \colorbox{yellow!100}{$\displaystyle#1$}}
+
+\newcommand{\hlgm}[1]{%
+  \colorbox{green!100}{$\displaystyle#1$}}
+
+\newcommand{\hly}[1]{\colorbox{yellow!100}{#1}}
+
+\newcommand{\hlg}[1]{\colorbox{green!100}{#1}}
+
+\author{Giovanni Della Lunga\\{\footnotesize giovanni.dellalunga@unibo.it}}
+%\title{1 - Introduction to Natural Language Processing}
+%\title{2 - Large Language Models and Transformers}
+\title{3 - Text Mining Analysis of Emerging Risk \\ \scalebox{0.8} {A Literature Review}}
+\subtitle{} % (optional)
+\setbeamercovered{transparent} 
+\institute{Halloween Conference 2024} 
+\date{Bologna - October, 30 2024} 
+
+\begin{document}
+
+%\begin{frame}
+%\includegraphics[width=\linewidth]{img/halloween-seminar-logo.PNG}
+%\end{frame}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\AtBeginSection[]
+{
+  %\begin{frame}<beamer>
+  %\footnotesize	
+  %\frametitle{Outline}
+  %\begin{multicols}{2}
+  %\tableofcontents[currentsection]
+  %\end{multicols}	  
+  %\normalsize
+  %\end{frame}
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}  	\usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+\AtBeginSubsection{\frame{\subsectionpage}}
+
+% INSERT HERE
+\begin{frame}{NLP in Emerging Risk Analysis}
+	\begin{itemize}
+		\item In this part we are going to see how Natural Language Processing can be used to address the analysis of various dimensions of emerging risk, focusing on climate, geopolitical, and cybersecurity risks
+
+		\item In particular we present 5 papers in which the previously described techniques are applied to build indexes and to study the relationship with market data ...
+
+		\item We give some description of the market data analysis but the focus will be mainly on the NLP side of the problem.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{NLP in Emerging Risk Analysis}
+\textbf{Climate Risk} (Kolbel et al., Engle et al.): 
+
+	\begin{itemize}
+		\item These presentations explore climate risk metrics, discussing the use of machine learning to evaluate climate-related financial exposures. 
+
+	\end{itemize}
+\textbf{Geopolitical Risk} (Caldara et al.): 
+
+	\begin{itemize}
+		\item Caldara's analysis delves into the Geopolitical Risk Index (GPR), illustrating its construction through a text-based approach that captures global events' impacts on markets. 
+
+	\end{itemize}
+\textbf{Cybersecurity Risk} (Florakis et al.,  Jamilov et al.): 
+
+	\begin{itemize}
+		\item The cybersecurity presentations introduce novel measures for firm-level cyber risk, applying computational linguistics to financial disclosures and earnings calls. They showcase how textual analysis can uncover cybersecurity risk exposures, assess market implications, and help investors factor these into decision-making.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\subsection{BERT and Climate Risk Disclosure Impact on CDS Term Structure \\ \scalebox{0.8}{J. F. Kolbel, M. Leippold, J. Rillaerts, Q. Wang}}
+%---------------------------------------------------------------------------------------------------
+\begin{frame}{Introduction to the Research Goal}
+	\begin{itemize}
+		\item The study aims to quantify the \textbf{impact of regulatory disclosures of transition and physical climate risks on the credit default swap (CDS) market} using the BERT model.
+
+		\item Climate risks entail \textbf{physical risks} that emerge from extreme weather events and \textbf{transition risks} stemming from regulatory reforms intended to combat global warming.
+
+		\item \hly{These two risks may affect companies in different ways}.
+
+		\item The directional effect of disclosing climate risks on risk premia is not obvious. Risk disclosure may trigger two opposing effects, a \hly{risk-perception} and an \hlg{information-uncertainty} effect.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Introduction to the Research Goal}
+\textbf{Key points}:
+
+	\begin{itemize}
+		\item Use of an \hly{advanced LLM like BERT} for classification;
+
+		\item Firm level analysis (text analysis of 10-K reports)
+
+		\item Fine tuning of pre-trained LLM
+
+		\item Analysis of impact on market data (CDS)
+	\end{itemize}
+	\begin{center}
+	\includegraphics[scale=0.5]{../5-pictures/chapter-03_pic_0.png}
+	\end{center}
+\end{frame}
+%..................................................................
+\begin{frame}{Data Collection and Processing}
+	10-K Report
+	\begin{center}
+	\includegraphics[scale=0.4]{../5-pictures/chapter-03_pic_1.png}
+	\end{center}
+\end{frame}
+%..................................................................
+\begin{frame}{Data Collection and Processing}
+	\textbf{Data Sources}:
+	\begin{itemize}
+		\item Regulatory Disclosures analyzed through 10-K filings.
+
+		\item Market Data: CDS spreads to analyze market impact.
+	\end{itemize}
+	\textbf{Data Processing}:
+	\begin{itemize}
+		\item Application of NLP to quantify risk disclosures.
+
+		\item BERT model applied to classify risk-related statements.
+
+		\item BERT is used \hly{to classify sentences} from the section Item 1.A of a firm`s 10-K report and generate a firm-specific measure of both transition and physical risks.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Methodology}
+	\textbf{BERT for NLP}:
+	\begin{itemize}
+		\item Differentiates sentences related to transition and physical climate risks.
+
+		\item Deriving a measure of climate risk from these regulatory filings is a subtle task. Companies are flexible in how they disclose and describe their climate risk exposure, which could make it difficult to compare the filings relative to each other.
+	\end{itemize}
+	\textbf{Index Construction}:
+	Developed indices for physical and transition risks based on term frequency and context.
+\end{frame}
+%..................................................................
+\begin{frame}{Fine Tuning of BERT}
+\begin{columns}[T] % align columns
+\begin{column}{.48\textwidth}
+        \begin{itemize}
+		\item Pre-trained BERT fine-tuned with specific examples from financial disclosures.
+		\item \textbf{Added layers} tailored for financial text classification.
+        \end{itemize}
+\end{column}%
+\hfill%
+\begin{column}{.48\textwidth}
+    %\fbox{
+        \includegraphics[width=\linewidth]{../5-pictures/chapter-03_pic_2.png}
+    %}
+\end{column}%
+\end{columns}
+\end{frame}
+\begin{frame}{Fine Tuning of BERT}
+BERT was fine-tuned specifically for sentence classification of climate risk disclosures, distinguishing between:
+
+	\begin{itemize}
+		\item \textbf{Transition Risk}: Risks arising from regulatory or policy changes related to climate action (e.g., new carbon tax, regulatory compliance).
+
+		\item \textbf{Physical Risk}: Risks arising from the physical impacts of climate change (e.g., natural disasters, extreme weather events).
+
+		\item \textbf{General} (non-climate related): Sentences not related to either transition or physical climate risks.
+
+	\end{itemize}
+
+
+The classification task was structured as a multi-class classification problem where each sentence in a 10-K filing needed to be assigned to one of the three categories.
+\end{frame}
+%..................................................................
+\begin{frame}{Fine Tuning of BERT}
+\textbf{Source of Labeled Data}:
+
+	\begin{itemize}
+		\item The \hly{training data} was derived from sample reports provided by TCFD (Task Force on Climate-Related Financial Disclosures) guidelines, offering nearly 1,000 example sentences.
+
+		\item In addition, the authors manually added random sentences not related to climate risks to ensure proper representation of general disclosures.
+
+	\end{itemize}
+\textbf{Manual Annotation of Sentences}:
+
+	\begin{itemize}
+		\item Sentences were labeled \textbf{manually} by experts with knowledge of both finance and the TCFD guidelines. 
+
+		\item This manual step ensured high-quality training data with accurate labeling of risks as transition, physical, or general.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Fine Tuning of BERT}
+\textbf{Confusing Sentence Review}:
+
+	\begin{itemize}
+		\item The authors employed an iterative method to enhance the quality of the training data. 
+
+		\item The fine-tuned model was run on the 10-K dataset, and confusing sentences (where probabilities across categories were similar) were identified.
+
+		\item These confusing sentences were reviewed by human annotators for proper classification and added to the training set along with confident sentences to maintain the balance of the dataset.
+
+	\end{itemize}
+\textbf{Final Training Set Size}:
+
+	\begin{itemize}
+		\item After several rounds of this review and annotation process, the authors built a final training set consisting of \textbf{3,192} classified sentences.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Fine Tuning of BERT}
+\begin{columns}[T] % align columns
+\begin{column}{.48\textwidth}
+        \begin{itemize}
+		\item \textbf{Network Architecture}:
+		\item The authors added two fully connected layers on top of the [CLS] token's output (which represents the sentence-level embedding).
+		\item Both of these layers had 128 hidden units.
+        \end{itemize}
+\end{column}%
+\hfill%
+\begin{column}{.48\textwidth}
+    %\fbox{
+        \includegraphics[width=\linewidth]{../5-pictures/chapter-03_pic_3.png}
+    %}
+\end{column}%
+\end{columns}
+\end{frame}
+\begin{frame}{Sentence Classification and Index Calculation}
+\textbf{Sentence Classification}:
+
+	\begin{itemize}
+		\item After fine-tuning, the model was applied to classify sentences from 10-K reports (Item 1.A) into transition, physical, or general categories.
+
+		\item For each sentence, BERT calculated a probability distribution across the three classes.
+
+		\item A threshold of 0.8 was used to determine whether a sentence was confidently assigned to one of the climate risk categories (transition or physical). 
+
+		\item Sentences with lower confidence remained unclassified or were assigned to the "general" category.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Sentence Classification and Index Calculation}
+\textbf{Document-Level Aggregation}:
+
+	\begin{itemize}
+		\item The final climate risk scores for each company were generated by averaging the binary classification results of individual sentences in each company's 10-K filing.
+
+		\item This yielded a document-level risk score that reflected the relative importance of transition and physical risks compared to other disclosed risks. 
+
+		\item The papers \hly{do not appear to define} "transition risk score" and "physical risk score" explicitly. The described methodology seems to imply that these scores are derived by aggregating BERT classifications on sentences related to either transition or physical risks in the 10-K filings. 
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Sentence Classification and Index Calculation}
+	\begin{itemize}
+		\item For example, the scores can be calculated as the proportion of sentences in each category relative to the total, representing the company`s focus on each risk type in its disclosures.
+
+	\end{itemize}
+	\begin{center}
+	\includegraphics[scale=0.5]{../5-pictures/chapter-03_pic_4.png}
+	\end{center}
+\end{frame}
+%..................................................................
+\begin{frame}{Linking Climate Risk Indices to CDS Market Data}
+\textbf{CDS (Credit Default Swap) Spreads}: 
+
+	\begin{itemize}
+		\item CDS spreads represent the cost of insuring a firm`s debt against default. 
+
+		\item A higher spread indicates a higher perceived risk of default. 
+
+		\item Thus, CDS spreads are sensitive to the market`s perception of a firm"s risk profile.
+
+	\end{itemize}
+\textbf{Data Source for CDS}: 
+
+	\begin{itemize}
+		\item The CDS data were collected from a reliable financial data provider, typically Thomson Reuters Datastream, covering various firms across time with daily observations.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Linking Climate Risk Indices to CDS Market Data}
+\textbf{Regression Analysis}: 
+
+	\begin{itemize}
+		\item The authors employed classical statistical regression models to analyze the relationship between the climate risk indices and changes in CDS spreads
+
+		\item By including the transition and physical risk indices as explanatory variables, they could observe whether higher scores in either index corresponded to higher (or lower) CDS spreads.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Linking Climate Risk Indices to CDS Market Data}
+They analyze how the regulatory disclosure of transition and physical risks impacts CDS spreads over various maturities. Specifically, they estimate the following one-month ahead forecasting regressions:
+
+\begin{align*} \Delta S^m_{i,t+1} &= \beta_T \Delta CR\text{-}Transition_{i,t} + \beta_P \Delta CR\text{-}Physical_{i,t} \\ &+ \Phi \Delta X_{i,t} + \Theta \Delta Y_t + \epsilon_{i,t+1}  \end{align*}
+
+where 
+
+	\begin{itemize}
+		\item $S^m_{i,t+1}$ denote the next month's (average) $m$-year spread  
+
+		\item $X_{i,t}$ and $Y_t$ are firm-specific and macro-economic control vectors, respectively
+
+		\item $CR\text{-}Trans_{i,t}$ and $CR\text{-}Phys_{i,t}$, denote BERT-based proxies for transition and physical risk.
+
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Insights on Market Pricing of Transition and Physical Risks}
+The results of the regression analysis provided key insights into how the market prices climate risks:
+
+	\begin{itemize}
+		\item \hly{Transition Risk}: An \textbf{increase in transition} risk disclosures was generally associated with \textbf{higher CDS spreads}, especially after landmark policy events like the Paris Agreement (2015). This reflects a market perception that \textbf{regulatory changes may impose additional compliance costs or operational risks, thus increasing the firm`s credit risk}.
+
+		\item \hlg{Physical Risk}: \textbf{Higher physical} risk disclosures were often associated with \textbf{lower CDS spreads}. The authors suggest this might be because \textbf{physical risks are perceived as more predictable and manageable (relative to regulatory risks)}, which could reduce uncertainty for investors and hence lower perceived credit risk.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Applications to Asset Pricing}
+\textbf{Potential for Broader Application}: 
+
+	\begin{itemize}
+		\item The link between climate disclosures and CDS spreads can be used to refine \textbf{asset pricing models}, allowing analysts and investors to incorporate climate risk into credit risk assessments and pricing.
+
+	\end{itemize}
+
+
+\textbf{Climate Risk as a Factor in Investment Decisions}: 
+
+	\begin{itemize}
+		\item The study`s findings suggest that climate risk disclosures-particularly transition risks-are material to credit risk and, by extension, asset pricing. This could lead to more systematic inclusion of climate risk factors in investment models and decision-making.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Summary}
+	\begin{itemize}
+		\item In essence, this approach offers a novel methodology to translate qualitative climate risk disclosures into quantitative indices that reflect transition and physical risks. 
+
+		\item By linking these indices to CDS spreads, the authors provide a framework to understand how climate risks are priced in the credit markets, revealing that the financial impacts of regulatory and physical risks are distinct and can influence investor behavior differently. 
+
+		\item This work underscores the growing importance of climate risk as a factor in financial markets, particularly in asset pricing and credit risk assessment.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\subsection{Hedging climate change news \\ \scalebox{0.8}{R. F. Engle, S. Giglio, H. Lee, B. Kelly, J. Stroebel
+}}
+%---------------------------------------------------------------------------------------------------
+\begin{frame}{Main Goal of the Research}
+Purpose
+
+	\begin{itemize}
+		\item Propose a method to dynamically hedge climate change risk using portfolios.
+
+		\item Extract climate change news from textual analysis.
+
+		\item Hedge climate risk based on news information.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Introduction to the Research Goal}
+\textbf{Key points}:
+
+	\begin{itemize}
+		\item Global level analysis
+
+		\item Use of News Data (mainly Wall Street Journal)
+
+		\item Analysis of impact on market data
+	\end{itemize}
+	\begin{center}
+	\includegraphics[scale=0.5]{../5-pictures/chapter-03_pic_5.png}
+	\end{center}
+\end{frame}
+%..................................................................
+\begin{frame}{Problem Addressed}
+\textbf{Challenge}: 
+
+	\begin{itemize}
+		\item Long-term, non-diversifiable nature of climate risk.
+
+		\item Lack of traditional insurance mechanisms for climate disaster events.
+
+	\end{itemize}
+\textbf{Solution Proposed}:
+
+	\begin{itemize}
+		\item Hedging via Portfolios
+
+		\item Construct portfolios to hedge climate change news.
+
+		\item Use equities to build dynamic hedge portfolios.
+
+	\end{itemize}
+
+
+	\begin{center}
+	\includegraphics[scale=0.6]{../5-pictures/chapter-03_pic_6.png}
+	\end{center}
+\end{frame}
+%..................................................................
+\begin{frame}{Climate News and Risk}
+\textbf{News-Based Approach}
+
+Two indices developed
+
+	\begin{itemize}
+		\item WSJ Climate Change News Index: Measures climate change news intensity in The Wall Street Journal.
+
+		\item CH Negative Climate Change News Index: Focuses on negative climate change news sentiment from a broader news dataset.
+
+	\end{itemize}
+\textbf{Data Sources}:
+
+	\begin{itemize}
+		\item Textual data from The Wall Street Journal (WSJ) and Crimson Hexagon.
+
+		\item Stock market data from CRSP for U.S. equities.
+
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Methodology Overview}
+\textbf{1 - Climate News Series Construction}:
+
+	\begin{itemize}
+		\item Use textual analysis on news articles to create a time series reflecting climate risk updates.
+
+		\item The two indices capture climate-related news intensity and sentiment to reflect innovations in climate risk.
+
+	\end{itemize}
+\textbf{2 - ESG Scores as Proxies}:
+
+	\begin{itemize}
+		\item MSCI and Sustainalytics Scores: ESG scores serve as proxies for firms` exposure to climate risk.
+
+		\item Portfolio construction relies on firm-level characteristics like carbon footprint and environmental performance.
+
+	\end{itemize}
+\textbf{3 - Mimicking Portfolio Approach}:
+
+	\begin{itemize}
+		\item The climate news factor is projected onto stock returns, forming hedge portfolios that correlate with climate news innovations.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Climate News Indices Development}
+WSJ Climate Change News Index:
+
+	\begin{itemize}
+		\item Based on \hly{cosine similarity} \textbf{between WSJ article content and a climate change vocabulary} created from authoritative climate documents.
+
+		\item Key climate events like the Paris Agreement and Copenhagen Conference show clear spikes.
+
+	\end{itemize}
+CH Negative Climate Change News Index:
+
+	\begin{itemize}
+		\item Uses sentiment analysis to focus on negative climate change news from over 1,000 outlets.
+
+		\item Aims to better capture investor concerns about worsening climate risk.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{WSJ Climate Change News Index}
+	\begin{itemize}
+		\item This index is designed to measure the frequency and intensity of climate-related topics in The Wall Street Journal (WSJ), which is widely read by the investment community. 
+
+		\item Let`s see how it`s constructed...
+	\end{itemize}
+	\begin{center}
+	\includegraphics[scale=1]{../5-pictures/chapter-03_pic_7.png}
+	\end{center}
+\end{frame}
+%..................................................................
+\begin{frame}{WSJ Climate Change News Index}
+A. Climate Change Vocabulary (CCV) Creation
+
+	\begin{itemize}
+		\item The authors collected 74 authoritative documents on climate change from institutions like IPCC, EPA and NASA.
+
+		\item These texts were processed to create a Climate Change Vocabulary (CCV), which includes frequently occurring terms and phrases related to climate change, such as global warming, carbon emissions, sea level rise, etc.
+
+		\item Terms were reduced to their root forms (using "stemming") to capture variations (e.g., "warming" and "warmed" both count as "warm").
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{WSJ Climate Change News Index}
+A. Climate Change Vocabulary (CCV) Creation
+
+	\begin{itemize}
+		\item Each term was then represented by term frequency-inverse document frequency (tf-idf), meaning terms that appear frequently across all documents have lower weights, while terms rare in other contexts have higher weights. This allows the vocabulary to reflect core climate change terminology.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{WSJ Climate Change News Index}
+B. Matching WSJ Content to CCV
+
+	\begin{itemize}
+		\item Every daily WSJ edition was analyzed and converted into tf-idf scores, which quantified how closely each edition matched the CCV.
+
+		\item Cosine Similarity: This method was used to compare each day`s WSJ content with the CCV. 
+
+		\item Days where WSJ content is very similar to the CCV (i.e., heavily focused on climate change) score close to 1, while days with little to no climate-related content score close to 0.
+
+		\item The WSJ Climate Change News Index is thus a scaled version of these cosine similarity scores, representing the proportion of WSJ`s content related to climate change each day.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{WSJ Climate Change News Index}
+C. Scaling and Smoothing
+
+	\begin{itemize}
+		\item The resulting index values are scaled by a factor of 10,000, making it easier to interpret changes over time.
+
+		\item This daily index is then averaged to a monthly level to reduce noise and facilitate further analysis.
+	\end{itemize}
+	\begin{center}
+	\includegraphics[scale=0.4]{../5-pictures/chapter-03_pic_8.png}
+	\end{center}
+\end{frame}
+%..................................................................
+\begin{frame}{WSJ Climate Change News Index}
+	\begin{center}
+	\includegraphics[scale=0.5]{../5-pictures/chapter-03_pic_9.png}
+	\end{center}
+\end{frame}
+%..................................................................
+\begin{frame}{CH Negative Climate Change News Index}
+This second index is specifically focused on negative sentiment climate news and uses data from a broader range of sources. It includes news articles across over 1,000 outlets like The New York Times, BBC, CNN, and Reuters. The process to construct this index was as follows:
+
+A. Data Collection via Crimson Hexagon
+
+	\begin{itemize}
+		\item The authors collaborated with Crimson Hexagon (CH), a data analytics provider that archives a massive corpus of news and social media posts.
+
+		\item The search term "climate change" was applied to CH`s dataset to retrieve climate-related articles starting from 2008.
+
+		\item To focus solely on reputable news media, only articles from major outlets were included, excluding social media posts.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{CH Negative Climate Change News Index}
+B. Sentiment Analysis
+
+	\begin{itemize}
+		\item CH`s proprietary sentiment analysis tools were used to categorize articles based on sentiment, particularly identifying those with a negative sentiment around climate change.
+
+		\item This approach assumes that when there is more negative news on climate change, investors are likely to perceive an increase in climate risk.
+	\end{itemize}
+	\begin{center}
+	\includegraphics[scale=1]{../5-pictures/chapter-03_pic_10.png}
+	\end{center}
+\end{frame}
+%..................................................................
+\begin{frame}{CH Negative Climate Change News Index}
+C. Index Construction and Scaling
+
+	\begin{itemize}
+		\item The CH Negative Climate Change News Index was then calculated as the proportion of all news articles related to climate change that had a negative sentiment.
+
+		\item Similar to the WSJ index, this measure was scaled by a factor of 10,000 to facilitate interpretation.
+
+	\end{itemize}
+D. Comparing and Validating the Indices
+
+	\begin{itemize}
+		\item Both indices were observed to spike around major climate events like the Kyoto Protocol, Paris Agreement, and other global climate conferences.
+
+		\item A correlation analysis was conducted between the two indices, which revealed a moderate correlation (about 0.3), indicating that both capture common elements of climate risk but are distinct in how they respond to different news events.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{CH Negative Climate Change News Index}
+	\begin{center}
+	\includegraphics[scale=0.5]{../5-pictures/chapter-03_pic_11.png}
+	\end{center}
+\end{frame}
+%..................................................................
+\begin{frame}{Why they need a Negative Sentiment Index}
+	\begin{itemize}
+		\item The authors introduce a negative sentiment climate change news index to address potential limitations of the WSJ Climate Change News Index. Specifically, this negative sentiment index is necessary to focus on the bad news or increased risk associated with climate change, which can have unique implications for financial markets
+
+		\item Climate change news is not uniformly negative. Some reports may discuss advancements in green technology or regulatory progress that mitigate risks, which can actually be perceived as positive for long-term investors.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Why they need a Negative Sentiment Index}
+	\begin{itemize}
+		\item If all climate change news is treated equally, the hedge portfolio could overreact to any climate news, even if it reflects beneficial developments rather than heightened risks.
+
+		\item The negative sentiment index isolates only the worsening climate news, helping investors hedge specifically against increases in perceived climate risks.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Summary of the Indices` Roles}
+	\begin{itemize}
+		\item Together, the WSJ Climate Change News Index and the CH Negative Climate Change News Index offer two perspectives on climate news.
+
+		\item The WSJ index captures general climate news intensity as reflected in a key financial publication.
+
+		\item The CH index focuses on negative news sentiment from a broader media landscape.
+
+		\item These indices thus serve as dynamic proxies for climate risk innovations, allowing the authors to test the effectiveness of different hedge portfolios based on the two indices` innovations.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Setting Up the Climate News Innovations (Hedge Targets)}
+The first goal is to create hedge targets-variables that capture unexpected changes (innovations) in climate news. They calculate innovations by detrending the indices using an autoregressive (AR(1)) model:
+
+	\begin{itemize}
+		\item Each monthly value of the WSJ and CH indices is regressed against its own prior month value.
+
+		\item The residuals (differences between predicted and actual values) represent innovations in climate news for that month.
+
+		\item These residuals, now de-trended, serve as the hedge targets denoted $CC_t^{WSJ}$ and $CC_t^{NegNews}$ for the WSJ and CH indices, respectively. 
+
+		\item These targets reflect new information about climate risk that investors did not anticipate based on prior trends.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{ Selecting the Hedge Portfolio Assets}
+The authors then need to select assets that are likely to respond to these climate news innovations. 
+
+	\begin{itemize}
+		\item U.S. Equities Focus: They use U.S. stock market equities since stocks are liquid, readily tradable, and have diverse industry and firm-level characteristics that could reflect varying exposures to climate risks.
+
+		\item Screening Stocks: Only common equity stocks from the NYSE, AMEX, and NASDAQ exchanges are included, with filters applied to avoid microcaps and penny stocks (below \$5/share) to maintain liquidity and avoid market anomalies.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{ Selecting the Hedge Portfolio Assets}
+Defining Climate Exposure Characteristics Using ESG Scores:
+
+	\begin{itemize}
+		\item MSCI and Sustainalytics ESG Scores serve as proxies for each firm`s climate risk sensitivity.
+
+		\item These scores capture environmental impacts, such as carbon footprints or energy efficiency, that are expected to correlate with climate risk sensitivity.
+
+		\item The ESG scores allow the authors to sort stocks based on their environmental performance, forming portfolios that include "green" (environmentally friendly) or "brown" (environmentally harmful) firms.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Mimicking Portfolio Construction}
+Factor Model Setup:
+
+They start with a linear factor model:
+
+$$r_t=\beta_{CC}\times CC_t+\beta\times v_t +u_t$$
+
+where:
+
+	\begin{itemize}
+		\item $r_t$: Vector of excess returns of stocks.
+
+		\item $\beta_{CC}$: Sensitivity of each asset to the climate news factor $CC_t$? $\beta$: Sensitivity to other market factors $v_t$? (e.g., size, value)
+
+		\item $u_t$: Idiosyncratic error term.
+
+	\end{itemize}
+This model is used to project the climate news factor onto stock returns by using the mimicking portfolio weights estimated through a cross-sectional regression.
+\end{frame}
+%..................................................................
+\begin{frame}{Mimicking Portfolio Construction}
+Incorporating Standard Market Factors:
+
+	\begin{itemize}
+		\item To ensure that the hedge portfolios are only exposed to climate risk (and not other common market factors), they add size, value, and market factors in the mimicking portfolio regression.
+
+		\item This approach ensures that the climate hedge portfolio is factor-neutral (uncorrelated with size, value, etc.) and captures only climate-related risks.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Mimicking Portfolio Construction}
+Estimating Mimicking Portfolio Weights:
+
+	\begin{itemize}
+		\item They regress each innovation in the climate news indices on the returns of these characteristic-sorted portfolios, creating portfolios that are long "winners" and short "losers" when climate news emerges.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Results}
+	\begin{center}
+	\includegraphics[scale=0.45]{../5-pictures/chapter-03_pic_12.png}
+	\end{center}
+\end{frame}
+%..................................................................
+\begin{frame}{Results}
+	\begin{center}
+	\includegraphics[scale=0.45]{../5-pictures/chapter-03_pic_13.png}
+	\end{center}
+\end{frame}
+%..................................................................
+\begin{frame}{Summary of Hedge Portfolio Characteristics}
+Finally, the authors analyze the characteristics of the hedge portfolios, revealing interesting findings:
+
+	\begin{itemize}
+		\item The portfolios are industry-balanced and do not simply reflect long positions in green energy or short positions in fossil fuels.
+
+		\item Firms from diverse sectors show sensitivity to climate news, suggesting that climate exposure is not strictly industry-dependent.
+
+		\item This construction enables the hedge portfolio to respond accurately to climate news, making it an adaptable financial instrument for managing climate-related financial risks.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\subsection{Measuring Geopolitical Risk \\ \scalebox{0.8}{D. Caldara and M. Iacoviello
+}}
+%---------------------------------------------------------------------------------------------------
+\begin{frame}{Main Goal of the Research}
+Purpose: Develop a news-based measure of geopolitical risk (GPR).
+
+	\begin{itemize}
+		\item They construct a newspaper-based indexes of geopolitical risk (GPR), daily and monthly, global and country-specific, and examine their evolution since 1900. 
+
+		\item Using aggregate macroeconomic data, then show that higher GPR increases the probability of an economic disaster and predicts lower investment and employment. 
+
+		\item Using firm-level data, they document that the adverse implications of geopolitical risk are stronger for firms in more exposed industries, and that high firm-level GPR is associated with lower firm-level investment.
+
+	\end{itemize}
+Analyze how geopolitical events like wars and terrorism affect macroeconomic variables. Create an index to forecast economic downturns.
+\end{frame}
+%..................................................................
+\begin{frame}{Introduction to the Research Goal}
+\textbf{Key points}:
+
+	\begin{itemize}
+		\item Global level analysis
+
+		\item 25 million articles from leading English-language newspapers
+
+		\item Textual analysis using a dictionary-based approach
+	\end{itemize}
+	\begin{center}
+	\includegraphics[scale=0.5]{../5-pictures/chapter-03_pic_14.png}
+	\end{center}
+\end{frame}
+%..................................................................
+\begin{frame}{Definition of Geopolitical Risk}
+\textbf{Geopolitical Risk (GPR)}:
+
+	\begin{itemize}
+		\item Defined as the threat, realization, or escalation of adverse geopolitical events (wars, terrorism, state tensions).
+
+		\item Measured using news articles and public perception.
+
+	\end{itemize}
+\textbf{Motivation}:
+
+	\begin{itemize}
+		\item Key determinant of investment, employment, and disaster risk.
+
+		\item Historically linked with significant economic downturns, such as World Wars and 9/11.
+
+	\end{itemize}
+
+
+\end{frame}
+%..................................................................
+\begin{frame}{Research Questions}
+\textbf{Key Questions Addressed}:
+
+	\begin{itemize}
+		\item How does geopolitical risk affect investment and employment?
+
+		\item How can a systematic measure of geopolitical risk help forecast economic downturns?
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Methodology Overview}
+\textbf{Textual Analysis}:
+
+	\begin{itemize}
+		\item News-based index created by analyzing articles from major newspapers.
+
+		\item Dictionary-based method used to track mentions of geopolitical events.
+
+	\end{itemize}
+\textbf{Quantitative Models}:
+
+	\begin{itemize}
+		\item VAR models to capture the impact of GPR on macroeconomic variables.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Data Sources}
+\textbf{Newspaper Data}:
+
+	\begin{itemize}
+		\item Collected from 25 million articles across 10 leading English-language newspapers.
+
+		\item Historical data from 1900 (e.g., New York Times).
+
+		\item Corresponding to about 30,000 and 10,000 articles per month in the recent and historical sample, respectively.
+
+	\end{itemize}
+\textbf{Other Data}:
+
+	\begin{itemize}
+		\item Firm-level data from 135,000 earnings calls to track geopolitical risks.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Data Selection Criteria}
+\textbf{Article Selection Process}:
+
+	\begin{itemize}
+		\item Articles selected based on pre-defined terms related to war, terrorism, political conflict.
+
+		\item Categories include words like 'nuclear,' 'conflict,' 'terrorism,' paired with 'threat' and 'invasion.'
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Geopolitical Risk Index (GPR)}
+\textbf{Index Construction}:
+
+	\begin{itemize}
+		\item The recent GPR index starts in 1985 and is based on automated text-searches on the electronic archives of 10 newspapers: the Chicago Tribune, the Daily Telegraph, the Financial Times, The Globe and Mail, The Guardian, the Los Angeles Times, The New York Times, USA Today, The Wall Street Journal, and The Washington Post. 
+
+		\item The choice of six newspapers from the U.S., three from the United Kingdom, and one from Canada reflects author intention to capture events that have global dimension and repercussions
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Geopolitical Risk Index (GPR)}
+\textbf{Index Construction}:
+
+	\begin{itemize}
+		\item GPR calculated as \textbf{the share of articles discussing adverse geopolitical events}
+
+		\item \textbf{The index counts, each month, the number of articles discussing rising geopolitical risks, divided by the total number of published articles}.
+
+		\item By the same token, the historical GPR index, dating back to 1900, is based on searches of the historical archives of the Chicago Tribune, The New York Times, and The Washington Post.
+
+		\item Separate sub-indexes for geopolitical threats and acts.
+
+		\item To construct the outcome of interest, they use a \hly{dictionary-based method}, specifying a dictionary of words whose occurrence in newspaper articles is associated with coverage of geopolitical events and threats.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Geopolitical Risk Index (GPR)}
+\textbf{Index Construction}:
+
+The specification of information that guides the construction of the dictionary is the following:
+
+	\begin{itemize}
+		\item First, they build directly on the \hly{definition of geopolitical risk} adopted in this paper, selecting words that closely align with the definition. 
+
+		\item Second, they use information from two geopolitical textbooks and from the Corpus of Historical American English to isolate themes that are more likely to be associated with geopolitical events (such as `war [on] terror` or `nuclear weapon`) or words that are more likely to be used in conjunction with war-related words (such as "declare"). 
+
+		\item Third, they organize the search around \hly{high-frequency words} and their synonyms that are more likely to appear in newspapers on days of high geopolitical tensions
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Geopolitical Risk Index (GPR)}
+\textbf{Index Construction}:
+
+	\begin{itemize}
+		\item The goal is to provide an index that can highlight distinct aspects of geopolitical risk, and that can be sliced conceptually and geographically. 
+
+		\item Doing so exclusively with one-word searches would likely lead to misclassification and measurement error. These considerations lead the authors to a specific search query, which specifies \hly{two words or phrases} whose \hlg{joint occurrence} likely indicates adverse geopolitical events.
+
+		\item The query is described in the following slide and is organized in eight categories . Each category is captured by a search query comprising two sets of words, the first set containing topic words (e.g. `war,` `nuclear,` or "terrorism"), the second set containing `threat` words for categories 1 through 5 and `act` words for categories 6 through 8.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Geopolitical Risk Index (GPR)}
+	\begin{center}
+	\includegraphics[scale=0.5]{../5-pictures/chapter-03_pic_15.png}
+	\end{center}
+\end{frame}
+%..................................................................
+\begin{frame}{Geopolitical Risk Index (GPR)}
+	\begin{center}
+	\includegraphics[scale=0.5]{../5-pictures/chapter-03_pic_16.png}
+	\end{center}
+\end{frame}
+%..................................................................
+\begin{frame}{Geopolitical Risk Index (GPR)}
+	\begin{center}
+	\includegraphics[scale=0.5]{../5-pictures/chapter-03_pic_17.png}
+	\end{center}
+\end{frame}
+%..................................................................
+\begin{frame}{Historical Insights of GPR}
+\textbf{Key Historical Events}:
+
+	\begin{itemize}
+		\item GPR spikes during major conflicts: World Wars, Korean War, Cuban Missile Crisis, 9/11.
+
+		\item Recent spikes: Gulf War, 2015 Paris terrorist attacks, North Korea crisis.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Validation of the GPR Index}
+\textbf{Validation Methods}:
+
+	\begin{itemize}
+		\item Cross-referenced with military spending data and war deaths.
+
+		\item Correlated with major newspaper front-page coverage to verify accuracy.
+
+		\item High correlation with actual geopolitical events.
+
+		\item Comparison with uncertainty (the VIX-a measure of stock market volatility-and the news-based EPU index of Baker, Bloom, and Davis (2016)).
+
+		\item Finaly they evaluate the GPR index against alternatives based on different search queries and they perform an \textbf{extensive human audit} of newspaper articles likely discussing geopolitical risks.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Methodology in Detail}
+\textbf{VAR Models}:
+
+	\begin{itemize}
+		\item Assess macroeconomic impact of GPR.
+
+	\end{itemize}
+\textbf{Main specification} consists of eight variables: 
+
+	\begin{itemize}
+		\item (1) the log of the GPR index;
+
+		\item (2) the VIX; 
+
+		\item (3) the log of real business fixed investment per capita; 
+
+		\item (4) the log of private hours per capita; 
+
+		\item (5) the log of the Standard and Poor`s 500 index; 
+
+		\item (6) the log of the West Texas Intermediate price of oil; 
+
+		\item (7) the yield on two-year U.S. Treasuries; 
+
+		\item (8) the Chicago Fed`s National Financial Conditions Index (NFCI).
+
+	\end{itemize}
+Separate models for geopolitical threats (GPT) vs. acts (GPA).
+\end{frame}
+%..................................................................
+\begin{frame}{Impact of GPR on Macroeconomic Variables}
+\textbf{Findings from VAR Models}:
+
+	\begin{itemize}
+		\item High GPR leads to declines in investment, employment, and stock prices.
+
+		\item Both geopolitical threats and realized acts contribute to economic contraction.
+
+		\item Significant impact in highly exposed industries.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Impact of GPR on Macroeconomic Variables}
+	\begin{center}
+	\includegraphics[scale=0.5]{../5-pictures/chapter-03_pic_18.png}
+	\end{center}
+\end{frame}
+%..................................................................
+\begin{frame}{Policy Implications}
+\textbf{Policy Recommendations}:
+
+	\begin{itemize}
+		\item Policymakers should incorporate GPR data into economic forecasting.
+
+		\item Central banks and investors need to manage risks linked to geopolitical events.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Conclusion}
+\textbf{Summary}:
+
+	\begin{itemize}
+		\item Geopolitical risk significantly impacts investment, employment, and GDP growth.
+
+		\item GPR index can help predict economic downturns, particularly in exposed industries.
+
+		\item Future research can extend findings to non-English sources and other contexts.
+	\end{itemize}
+\end{frame}
+%..................................................................
+%===================================================================================================
+\section{Cybersecurity Risk \\ \scalebox{0.8}{C. Florackis, C. Louca, R. Michaely and M. Weber}}
+%---------------------------------------------------------------------------------------------------
+\begin{frame}{Introduction to Cybersecurity Risk}
+\textbf{Understanding Cybersecurity Risk}
+
+	\begin{itemize}
+		\item \textbf{Cybersecurity risk} refers to potential financial losses, disruptions, or reputational damage that firms may face due to failures in their information technology systems, often caused by cyberattacks.
+
+		\item Examples of cybersecurity risks include data breaches, service disruptions, and physical damage to IT infrastructure.
+
+		\item Firms are increasingly concerned about cybersecurity due to the rising frequency and complexity of cyberattacks.
+
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{The Research Goal}
+\textbf{Developing a Cybersecurity Risk Measure}
+
+	\begin{itemize}
+		\item The authors aim to create a novel \hly{firm-level} measure of cybersecurity risk for U.S.-listed firms, which is based on textual analysis of \hlg{risk disclosures}.
+
+		\item The goal is to explore \textbf{whether cybersecurity risk is priced in the stock market} and \textbf{how exposure to cybersecurity risk correlates with future returns}.
+
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Machine Learning for Textual Analysis}
+\textbf{Machine Learning Approach for Textual Analysis}
+
+	\begin{itemize}
+		\item The paper utilizes \textbf{textual analysis} as the primary method for identifying cybersecurity risk from firms` \textbf{10-K filings}, specifically from the \textbf{Item 1A. Risk Factors} section.
+
+		\item \textbf{Natural Language Processing (NLP)} techniques are used to extract language related to cybersecurity risk from these filings, which forms the basis of the machine learning model.
+
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Data Collection and Processing}
+\textbf{Data Sources}
+
+	\begin{itemize}
+		\item \textbf{10-K Filings} from SEC`s Edgar database, focusing on risk factors related to cybersecurity. The primary data comes from the "Item 1A. Risk Factors" section of 10-K filings, which is mandated by the U.S. Securities and Exchange Commission (SEC).
+
+		\item Firms are required to disclose the most significant risks they face in this section, which makes it a valuable source for understanding how firms perceive and disclose cybersecurity risks. The authors focus on \textbf{firms` descriptions of cybersecurity risk} and use this information to create their risk measure.
+
+		\item \textbf{PRC Database} for \textit{identifying firms that experienced data breaches or cyberattacks}.
+
+		\item \textbf{Financial and stock return data} from CRSP, Compustat, and Bloomberg.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Data Collection and Processing}
+\textbf{Text Extraction}
+
+	\begin{itemize}
+		\item They develop a list of keywords and phrases directly related to cybersecurity risks, such as "unauthorized access," "cyber," "data breach," "hacker," and "attack."
+
+		\item To refine the extraction process, additional contextual filters are applied to ensure relevance. For example, they require keywords like "cyber" to be present along with "attack" to avoid irrelevant matches such as "terrorist attacks".
+
+		\item This results in extracting sentences that specifically discuss cybersecurity risk.
+
+		\item Examples of keywords: "unauthorized access", "cyber", "data breach", "hacker".
+
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{"Training" Sample of Firms Attacked by Cyberattacks}
+To create a reliable measure of cybersecurity risk, the authors begin by building a \textit{ "training sample"} of firms that have experienced major cyberattacks.
+
+	\begin{itemize}
+		\item \textbf{Privacy Rights Clearinghouse (PRC)} provides the data on firms that suffered cyberattacks between 2007 and 2018. PRC records the details of cyber incidents such as the type of attack (e.g., hacking, data breaches) and its impact.
+
+		\item The training sample \textbf{consists of firms that have faced "major" cyberattacks}, meaning these incidents attracted significant attention in global news outlets like Bloomberg, Reuters, or major newspapers. These firms are expected to have had \textbf{high exposure to cybersecurity risk ex-ante}.
+
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Indirect Descriptions of Cybersecurity Risk}
+In addition to direct mentions of cybersecurity risk, the authors also capture indirect descriptions.
+
+	\begin{itemize}
+		\item For instance, firms might describe their business operations, security measures, and the potential consequences of a cyberattack without explicitly using terms like "cyber" or "hacker."
+
+		\item The authors categorize these descriptions into three consequences: internal consequences, legal consequences, and economic consequences.
+
+		\item A second list of indirect keywords is compiled to capture these discussions, including terms like "damage," "disruption," and "litigation."
+
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Similarity-Based Textual Analysis}
+	\begin{itemize}
+		\item The crux of the cybersecurity risk measure is based on \hly{\textbf{textual similarity}}. The idea is that firms with similar levels of cybersecurity risk will use similar language in their risk disclosures.
+
+		\item \textbf{For each firm, the authors calculate the similarity between its cybersecurity-risk disclosure and the disclosures of firms in the training sample (firms that experienced major cyberattacks)}.
+
+		\item Cosine Similarity and Jaccard Similarity are the two methods used for this comparison.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Similarity-Based Textual Analysis}
+\textbf{a) Cosine Similarity}
+
+	\begin{itemize}
+		\item Cosine similarity measures the cosine of the angle between two word vectors.
+
+		\item The firm`s disclosure is transformed into a vector of word frequencies. The similarity between two documents (in this case, a firm`s 10-K disclosure and the disclosure of an attacked firm) is the cosine of the angle between the two vectors.
+
+		\item A higher cosine similarity score indicates greater overlap in the language used, suggesting similar levels of cybersecurity risk.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Similarity-Based Textual Analysis}
+\textbf{b) Jaccard Similarity}
+
+	\begin{itemize}
+		\item Jaccard similarity measures the size of the intersection of two sets of words (shared words) divided by the size of their union (total unique words).
+
+		\item It essentially captures the degree of overlap in word choice between two firms cybersecurity-risk disclosures.
+
+	\end{itemize}
+These similarity measures help to quantify how closely a firm's risk disclosure resembles that of the attacked firms.
+
+	\begin{center}
+	\includegraphics[scale=0.4]{../5-pictures/chapter-03_pic_19.png}
+	\end{center}
+\end{frame}
+%..................................................................
+\begin{frame}{Resume The Machine Learning Process}
+	\footnotesize{
+\textbf{Step 1: Text Extraction}:
+
+	\begin{itemize}
+		\item Cybersecurity-related sentences are extracted from risk disclosures using a keyword-based algorithm.
+
+	\end{itemize}
+\textbf{Step 2: Feature Engineering}:
+
+	\begin{itemize}
+		\item The sentences are transformed into word vectors, excluding stopwords, pronouns, and irrelevant phrases.
+
+	\end{itemize}
+\textbf{Step 3: Similarity Calculation}:
+
+	\begin{itemize}
+		\item Each firm`s textual data is compared with those in the training set using cosine and Jaccard similarity.
+
+	\end{itemize}
+\textbf{Step 4: Scoring}:
+
+	\begin{itemize}
+		\item The similarity score for each firm is averaged to calculate its overall cybersecurity risk score.
+	\end{itemize}
+	}
+	\begin{center}
+	\includegraphics[scale=0.75]{../5-pictures/chapter-03_pic_20.png}
+	\end{center}
+\end{frame}
+%..................................................................
+\begin{frame}{Validation of the Cybersecurity Risk Measure}
+The authors validate the cybersecurity risk measure through several tests:
+
+	\begin{itemize}
+		\item Language Complexity: Firms with higher scores tend to use more sophisticated and detailed language to describe cybersecurity risks.
+
+		\item Legal Consequences: Higher-risk firms are more likely to discuss the legal consequences of cyberattacks and use more precise and negative language in their disclosures, potentially as a way to reduce litigation risk.
+
+		\item Cyber Insurance: Firms with higher risk scores are more likely to mention cyber insurance policies in their filings, indicating they are actively managing their cybersecurity risk.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Application in Asset Pricing}
+	\begin{itemize}
+		\item Finally, the authors apply the cybersecurity risk measure to study whether cybersecurity risk is priced in the cross-section of stock returns.
+
+		\item They form portfolios of firms based on their cybersecurity risk scores and find that \textbf{firms with higher cybersecurity risk tend to earn higher future returns}, suggesting that investors demand a risk premium for holding stocks exposed to higher cybersecurity risk.
+
+		\item This finding is further confirmed using Fama-MacBeth regressions, showing that cybersecurity risk is a significant predictor of stock returns.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Application in Asset Pricing}
+In particular ...
+
+	\begin{itemize}
+		\item Stock Returns: Firms with high cybersecurity risk scores tend to earn higher future returns, as investors demand a premium for holding these riskier stocks.
+
+		\item Portfolio Performance: An equal-weighted portfolio of high-cybersecurity-risk firms outperformed low-risk firms by up to 8.3% annually.
+
+		\item Cross-sectional Regression: Fama-MacBeth regressions show that cybersecurity risk predicts stock returns up to 12 months in advance.
+
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Conclusion}
+The Role of Machine Learning in Understanding Cybersecurity Risk
+
+	\begin{itemize}
+		\item This study highlights the importance of machine learning techniques such as NLP and textual similarity measures in quantifying firm-level cybersecurity risk.
+
+		\item The model demonstrates strong predictive power, correlating with actual cyberattacks and stock market performance.
+
+		\item The approach provides valuable insights for investors, regulators, and firms about managing cybersecurity risk and its implications for financial markets.
+
+	\end{itemize}
+\end{frame}
+%..................................................................
+%===================================================================================================
+\section{The Anatomy of Cyber Risk \\ \scalebox{0.8}{R. Jamilov, H. Rey and A. Tahoun
+}}
+%---------------------------------------------------------------------------------------------------
+\begin{frame}{Objectives of the Study}
+	\begin{itemize}
+		\item Introduce a novel measure of \textbf{firm-level} cyber-risk exposure using computational linguistics applied to transcripts from quarterly \textbf{earnings conference calls} from 2002-2021.
+
+		\item These transcripts provide a direct insight into the discussions held between corporate executives and analysts or investors, often touching on a range of topics including financial performance, market challenges, and operational risks like cyber threats.
+
+		\item Firm-level exposure correlates with actual cyberattacks impacting stock returns and profits. Market adjustments visible through equity options.
+
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Source of Data}
+\textbf{Scope and Scale}
+
+	\begin{itemize}
+		\item \textbf{Firms}: The dataset encompasses approximately 13,000 firms. This broad coverage across different industries and sectors provides a comprehensive view of how businesses of various sizes and operational scopes discuss and perceive cyber risk.
+
+		\item \textbf{Countries}: These firms are located across 85 countries, offering a global perspective on cyber risk that includes insights from both developed and emerging markets. The international diversity in the dataset is crucial for understanding regional differences in cybersecurity awareness and incident reporting.
+
+		\item \textbf{Time Span}: The data covers the period from 2002 to 2021. This long timeframe allows the authors to analyze trends over nearly two decades, capturing the evolution of cyber risk discussions as digital technologies and cyber threats have developed.
+
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Source of Data}
+\textbf{Content of the Data}
+
+	\begin{itemize}
+		\item \textbf{Earnings Calls}: The discussions during these calls generally revolve around the company`s financial results, but they also delve into strategic issues like cybersecurity. This makes them rich sources of spontaneous, unscripted dialogue about the challenges and risks firms face, including those related to cyber threats.
+
+		\item \textbf{Cybersecurity Discussions}: Specific mentions of terms and phrases related to cybersecurity within these calls were the focal points for analysis. These include direct mentions of cyber attacks, security breaches, IT security measures, and any other related discussions that could indicate a firm`s exposure to cyber risk.
+
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Data Extraction and Preparation}
+\textbf{Transcript Acquisition}: 
+
+	\begin{itemize}
+		\item Transcripts were sourced from publicly available databases that collect and store such financial disclosures. 
+
+		\item In particular, quarterly earnings conference calls of firms are publicly listed in the United States from Thomson Reuters` StreetEvents
+
+	\end{itemize}
+\textbf{Option Market Data}
+
+	\begin{itemize}
+		\item The main source of option data is the \hly{OptionMetrics` Ivy DB} Volatility Surface File.
+
+	\end{itemize}
+\textbf{Text Processing}: 
+
+	\begin{itemize}
+		\item Before analysis, the text data would require significant preprocessing. 
+
+		\item This includes cleaning the data, tokenization and possibly tagging or categorizing terms based on their relevance to cybersecurity.
+
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Analytical Use}
+\textbf{Development of Cybersecurity Lexicon}: 
+
+	\begin{itemize}
+		\item The authors used these transcripts to develop a lexicon or list of terms that are relevant to cybersecurity, as discussed previously. 
+
+		\item This lexicon was then used to scan and score the earnings call transcripts for cyber risk discussions.
+
+	\end{itemize}
+\textbf{Validation Against Actual Incidents}: 
+
+	\begin{itemize}
+		\item To validate their cyber risk measure, the authors compared their findings from the textual analysis with actual reported cyber incidents and their financial impacts on the firms. 
+
+		\item This step is crucial to establish the reliability and relevance of the text-based measures derived from earnings calls.
+
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Methodology}
+\textbf{Development of a Cybersecurity Lexicon}
+
+A crucial step in their methodology was the creation of a comprehensive lexicon of cybersecurity-related terms. This lexicon includes terms that are commonly associated with cyber incidents, threats, and general cybersecurity practices. The development of this lexicon involved:
+
+	\begin{itemize}
+		\item Literature Review: Examining academic and industry literature to identify commonly used cybersecurity terms.
+
+		\item Expert Consultation: Engaging with cybersecurity experts to validate and expand the list of terms.
+
+		\item Regulatory and Industry Sources: Incorporating terms from regulatory frameworks and industry-specific documents that pertain to cybersecurity.
+
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Methodology}
+\textbf{Development of a Cybersecurity Lexicon Sources}:
+
+	\begin{itemize}
+		\item Financial Stability Board (FSB) "Cyber Lexicon"
+
+		\item "NCSC Glossary" of common cybersecurity terms provided by the National Cyber Security Centre
+
+		\item "Glossary of Common Cybersecurity Terms and Phrases" made available by the NICCS, an initiative managed by the Cybersecurity and Infrastructure Security Agency (CISA)
+
+		\item 
+
+	\end{itemize}
+In total, the dictionary used in the paper consists of 275 terms
+\end{frame}
+%..................................................................
+\begin{frame}{Methodology}
+\textbf{Natural Language Processing (NLP) Application}
+
+With the lexicon established, the next step involved applying NLP techniques to the earnings call transcripts. This process typically involves several stages:
+
+	\begin{itemize}
+		\item \textbf{Text Preprocessing}: Cleaning the text data by removing stopwords, punctuation, and performing tokenization to break down the text into manageable pieces or tokens.
+
+		\item \textbf{Term Frequency Analysis}: Counting the frequency of each cybersecurity-related term within the transcripts to gauge the focus on cybersecurity in each earnings call.
+
+		\item \textbf{Contextual Analysis}: Not just identifying the presence of cybersecurity terms but also analyzing the context in which these terms were used to ensure they relate to actual cyber risk discussions rather than coincidental mentions.
+
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Scoring System}
+\textbf{Quantifying Cyber Risk Exposure}
+
+The \hly{frequency and context of cybersecurity-related terms} were used to create a cyber risk exposure score for each firm for each quarter. This scoring system likely involves:
+
+	\begin{itemize}
+		\item \textbf{Scoring Algorithm}: Developing a scoring algorithm that assigns weights to different terms based on their significance and the context of their usage.
+
+		\item \textbf{Normalization}: Normalizing these scores across all firms and time periods to facilitate comparative analysis.
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Scoring System}
+\textbf{Quantifying Cyber Risk Exposure}
+
+The actual "scoring system" is an index constructed from the aggregated data of term frequencies adjusted by the context, it generally involves:
+
+	\begin{itemize}
+		\item Summing the weighted frequencies of cybersecurity terms.
+
+		\item Adjusting for the firm size or industry where necessary to normalize the measure across different companies.
+
+		\item Potentially time-weighting the terms to reflect more recent discussions more heavily, aligning with the evolving nature of cyber threats.
+
+		\item 
+
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Scoring System}
+They define three variants of the same measure. 
+
+	\begin{itemize}
+		\item First, absolute frequency ($CyberRisk^A_{i,t}$) which is the number of times terms from the validated dictionary that appear in each earnings-call transcript. 
+
+		\item Second, relative frequency ($CyberRisk^R_{i,t}$) which is $CyberRisk^A_{i,t}$ scaled by the total number of words in each transcript $B_{i,t}$. 
+
+		\item Finally, a binary indicator ($CyberRisk^I_{i,t}$) that takes the value of $1$ if any of the terms in the validated dictionary appears in the transcript, and $0$ otherwise
+	\end{itemize}
+	\begin{center}
+	\includegraphics[scale=0.4]{../5-pictures/chapter-03_pic_21.png}
+	\end{center}
+\end{frame}
+%..................................................................
+\begin{frame}{Validation}
+\textbf{Validation and Correlation with Actual Incidents}
+
+	\begin{itemize}
+		\item To validate their NLP-derived measures of cyber risk, the researchers correlated these measures with \hly{actual reported cyber incidents} and their impact on financial outcomes such as stock returns, profitability, and market valuation adjustments. 
+
+		\item This step is critical to ensure that the textual analysis provides a reliable indicator of real-world cyber risk.
+
+	\end{itemize}
+\end{frame}
+%..................................................................
+\begin{frame}{Statistical and Econometric Analysis}
+\textbf{Stock Market Effect}
+
+	\begin{itemize}
+		\item The first test of economic significance is whether proposed measures of cyber risk exposure have any meaningful effect on firms` stock market performance. 
+
+		\item Cyber risk exposure does not necessarily imply an actual incident; it is fundamentally a forward looking measure which implies a heightened likelihood of a future cybersecurity crisis or event. This uncertainty alone can affect asset prices today. 
+
+		\item To test this theory, they run quarterly firm-level regressions of standardized value-weighted stock returns (WRet), cumulative stock returns (CRet), and realized stock market volatility (RV) on CyberRiskIi,t and CyberRiskRi,t
+
+		\item Both have negative and significant effects on stock returns and have a large and significant positive effect on realized volatility
+	\end{itemize}
+\end{frame}
+%..................................................................
+%=====================================================================
+
+
+\end{document}
